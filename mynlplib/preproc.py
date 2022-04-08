@@ -12,6 +12,7 @@ def bag_of_words(text):
     :returns: a Counter for a single document
     :rtype: Counter
     '''
+    return Counter(text)
     
     raise NotImplementedError
 
