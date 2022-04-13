@@ -15,8 +15,15 @@ def get_corpus_counts(x,y,label):
     :rtype: defaultdict
 
     """
-
-    raise NotImplementedError
+    def ret():
+        return 0
+    d = defaultdict(ret)
+    for i in range(len(y)):
+        if y[i] == label:
+            for word in x[i]:
+                d[word] = d.get(word,0) + x[i][word]
+    return d                
+    #raise NotImplementedError
 
 # deliverable 3.2
 def estimate_pxy(x,y,label,smoothing,vocab):
@@ -32,8 +39,15 @@ def estimate_pxy(x,y,label,smoothing,vocab):
     :rtype: defaultdict of log probabilities per word
 
     '''
-
-    raise NotImplementedError
+    def ret():
+        return 0
+    ans = defaultdict(ret)
+    d = get_corpus_counts(x,y,label)
+    for word in vocab:
+        ans[word] = np.log((d[word] + smoothing)/(sum(d.values()) + smoothing*len(vocab))) 
+        
+    return ans    
+    #raise NotImplementedError
 
 # deliverable 3.3
 def estimate_nb(x,y,smoothing):
