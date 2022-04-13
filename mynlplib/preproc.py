@@ -67,10 +67,9 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     '''
     t = []
     vocab = set()
-    for count in target_data:
-        for word in count:
-            if training_counts.get(word,0) >= min_counts:
-                vocab.add(word)
+    for word in training_counts:
+        if training_counts.get(word,0) >= min_counts:
+            vocab.add(word)
     
     for i in range(len(target_data)):
         count = target_data[i].copy()
