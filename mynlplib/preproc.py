@@ -65,22 +65,21 @@ def prune_vocabulary(training_counts, target_data, min_counts):
     :returns: list of words in pruned vocabulary
     :rtype: list of Counters, set
     '''
-    vocab = []
-    rem_list = []
+    t = []
+    vocab = set()
     for count in target_data:
         for word in count:
-            if word not in vocab and training_counts.get(word,0) >= min_counts:
-                vocab.append(word)
-            else:
-                if word not in rem_list:
-                    rem_list.append(word)
-    for count in target_data:
-        for word in list(count):
-            if word in rem_list:
-                count.pop(word)
-    #raise NotImplementedError
+            if training_counts.get(word,0) >= min_counts:
+                vocab.add(word)
     
-    return target_data, vocab
+    for i in range(len(target_data)):
+        count = target_data[i].copy()
+        for word in target_data[i]:
+            if word not in vocab:
+                count.pop(word)
+        t.append(count)
+    #raise NotImplementedError
+    return t, vocab
 
 # deliverable 5.1
 def make_numpy(bags_of_words, vocab):

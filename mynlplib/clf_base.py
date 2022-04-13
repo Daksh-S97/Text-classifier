@@ -21,8 +21,14 @@ def make_feature_vector(base_features,label):
     :rtype: dict
 
     '''
+    dic = {}
+    for word,count in base_features.items():
+        dic[(label, word)] = count
+    
+    dic[(label, OFFSET)] = 1
+    return dic
 
-    raise NotImplementedError
+    #raise NotImplementedError
 
 # deliverable 2.2
 def predict(base_features,weights,labels):
@@ -36,8 +42,14 @@ def predict(base_features,weights,labels):
     :rtype: string, dict
 
     '''
-    
-    raise NotImplementedError
+    dic = {}
+    for features, weight in weights.items():
+        if features[1] == '**OFFSET**':
+            dic[features[0]] = dic.get(features[0], 0) + weight
+        dic[features[0]] = dic.get(features[0], 0) + weight*base_features.get(features[1],0) 
+    lab = argmax(dic)
+    return lab,dic
+    #raise NotImplementedError
 
 def predict_all(x,weights,labels):
     '''
