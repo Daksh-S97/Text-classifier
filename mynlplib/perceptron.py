@@ -14,8 +14,15 @@ def perceptron_update(x,y,weights,labels):
     :rtype: defaultdict
 
     '''
-
-    raise NotImplementedError
+    update = defaultdict(float)
+    fv = make_feature_vector(x,y)
+    label, _ = predict(x,fv,labels)
+    if label != y:
+        fv2 = make_feature_vector(x,label)
+        for features,weight in fv.items():
+            update[featues[1]] = fv[features] - fv2.get((label,features[1]),0)
+            weights[features[1]] = weights.get(features[1], 0) + update[features[1]]
+    #raise NotImplementedError
     
     return update
 

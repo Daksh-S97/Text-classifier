@@ -3,6 +3,7 @@ from mynlplib import clf_base, evaluation
 
 import numpy as np
 from collections import defaultdict
+from collections import Counter
 
 # deliverable 3.1
 def get_corpus_counts(x,y,label):
@@ -60,8 +61,28 @@ def estimate_nb(x,y,smoothing):
     :rtype: defaultdict 
 
     """
+    def ret():
+        return 0
+    w = defaultdict(ret)
     
-    raise NotImplementedError
+    l_counts = Counter(y)
+    vocab = set()
+    
+    for counts in x:
+        for word in counts:
+            vocab.add(word)
+            
+    for label in l_counts:
+        c = l_counts[label]/sum(l_counts.values())
+        #print(label,c)
+        d = estimate_pxy(x,y,label,smoothing,vocab)
+        for word,prob in d.items():
+            w[(label,word)] = d[word]
+        
+        w[(label, OFFSET)] = np.log(c)
+           
+    return w
+    #raise NotImplementedError
 
 # deliverable 3.4
 def find_best_smoother(x_tr,y_tr,x_dv,y_dv,smoothers):
@@ -77,5 +98,14 @@ def find_best_smoother(x_tr,y_tr,x_dv,y_dv,smoothers):
     :rtype: float, dict
 
     '''
+    labels = set(y_tr)
+    dic = {}
+    for s in smoothers:
+        weights = estimate_nb(x_tr, y_tr,s)
+        preds = clf_base.predict_all(x_dv, weights, labels)
+        score = evaluation.acc(preds,y_dv)
+        dic[s] = score
+    
+    return (max(dic, key = dic.get)), dic
 
-    raise NotImplementedError
+    #raise NotImplementedError

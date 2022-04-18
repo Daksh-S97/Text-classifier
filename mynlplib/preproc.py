@@ -91,6 +91,12 @@ def make_numpy(bags_of_words, vocab):
     :rtype: numpy array
     '''
     vocab = sorted(vocab)
+    ans = np.zeros((len(bags_of_words), len(vocab)))
+    for i in  range(len(bags_of_words)):
+        for j in range(len(vocab)):
+            ans[i][j] = bags_of_words[i].get(vocab[j], 0)
+                   
+    return ans        
 
     raise NotImplementedError
 
