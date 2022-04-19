@@ -24,9 +24,7 @@ def perceptron_update(x,y,weights,labels):
     if label != y:
         fv = make_feature_vector(x,label)
         for feature in list(fv2.keys())+list(fv.keys()):
-            update[feature] = fv2.get(feature,0.0) - fv.get(feature,0.0)
-        # for feature,weight in fv.items():
-        #     update[feature] = fv2.get(feature,0.0) - fv[feature]    
+            update[feature] = fv2.get(feature,0.0) - fv.get(feature,0.0)    
     #raise NotImplementedError
 
     return update
@@ -48,12 +46,12 @@ def estimate_perceptron(x,y,N_its):
     labels = set(y)
     weights = defaultdict(float)
     weight_history = []
-    for it in range(N_its):
+    for it in range(N_its+1):
         for x_i,y_i in zip(x,y):
             # YOUR CODE GOES HERE
             update = perceptron_update(x_i,y_i,weights,labels)
-            for feature in update:
-                weights[feature] = weights.get(feature,0.0) + update[feature]
+            for feature,weight in update.items():
+                weights[feature] += weight
             #raise NotImplementedError
             
         weight_history.append(weights.copy())
