@@ -12,8 +12,11 @@ def get_top_features_for_label(weights,label,k=5):
     :returns: list of tuples of features and weights
     :rtype: list
     '''
-
-    raise NotImplementedError
+    dic = {k:v for k,v in weights.items() if k[0] == label}
+    lis2 = [(k,v) for k,v in sorted(dic.items(), key = lambda item : item[1], reverse=True)]
+    
+    return lis2[:k]                             
+    #raise NotImplementedError
 
 # deliverable 6.2
 def get_top_features_for_label_torch(model,vocab,label_set,label,k=5):
@@ -29,6 +32,7 @@ def get_top_features_for_label_torch(model,vocab,label_set,label,k=5):
     '''
 
     vocab = sorted(vocab)
+    
 
     raise NotImplementedError
 

@@ -46,13 +46,12 @@ def estimate_perceptron(x,y,N_its):
     labels = set(y)
     weights = defaultdict(float)
     weight_history = []
-    for it in range(N_its+1):
+    for it in range(N_its):
         for x_i,y_i in zip(x,y):
             # YOUR CODE GOES HERE
             update = perceptron_update(x_i,y_i,weights,labels)
-            for feature,weight in update.items():
-                weights[feature] += weight
-            #raise NotImplementedError
-            
+            for feature in update:
+                weights[feature] += update[feature]
+            #raise NotImplementedError    
         weight_history.append(weights.copy())
     return weights, weight_history
