@@ -50,10 +50,12 @@ def estimate_perceptron(x,y,N_its):
         print("Iteration: " + str(it+1))
         for x_i,y_i in zip(x,y):
             # YOUR CODE GOES HERE
-            print(len(weights))
+            #print(len(weights))
+            
             update = perceptron_update(x_i,y_i,weights,labels)
             for feature in update:
                 weights[feature] += update[feature]    
+            
             #raise NotImplementedError
         #print(weights[('1980s','its')])   
         weight_history.append(weights.copy())

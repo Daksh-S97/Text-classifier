@@ -57,6 +57,11 @@ def get_token_type_ratio(counts):
     :rtype: float
 
     '''
+    lis = [counts[i] for i in range(len(counts)) if counts[i] != 0]
+    if len(lis) == 0:
+        return 0
+    else:
+        return sum(lis)/len(lis)
     
     raise NotImplementedError
 
@@ -71,5 +76,17 @@ def concat_ttr_binned_features(data):
     :rtype: numpy array
 
     '''
+    new_data = np.zeros((data.shape[0], data.shape[1]+7))
+    for i in range(len(data)):
+        lis = np.zeros(7)
+        ratio = get_token_type_ratio(data[i])
+        if ratio >= 6:
+            lis[-1] = 1
+        else:
+            lis[int(np.floor(ratio))] = 1
+        new_data[i] = np.concatenate((data[i], lis))
+        
+    return new_data     
+            
     
     raise NotImplementedError
