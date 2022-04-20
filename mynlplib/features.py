@@ -30,9 +30,20 @@ def get_top_features_for_label_torch(model,vocab,label_set,label,k=5):
     :returns: list of words
     :rtype: list
     '''
-
-    vocab = sorted(vocab)
     
+    vocab = sorted(vocab)
+    for name,parameter in model.named_parameters():
+        if name == "Linear.weight":
+            weights = parameter
+    for i in range(len(label_set)):
+        if label_set[i] == label:
+            idx = i
+    lis = []
+    idxs = np.argsort(weights[idx].detach().numpy())[-5:]
+    for i in range(len(idxs)-1, -1, -1):
+        lis.append(vocab[idxs[i]])
+    
+    return lis
 
     raise NotImplementedError
 
