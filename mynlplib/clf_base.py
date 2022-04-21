@@ -43,18 +43,16 @@ def predict(base_features,weights,labels):
 
     '''
     dic = dict()
-    # for label in labels:
-    #     print(label)
-    #     for features,weight in weights.items():
-    #         if features[0] == label:
-    #             if features[1] == '**OFFSET**':
-    #                 dic[features[0]] = dic.get(features[0], 0) + weight
-    #             dic[features[0]] = dic.get(features[0],0) + weight*base_features.get(features[1],0)    
         
+    if len(weights)==0:
+        for label in labels:
+            dic[label] = 0.0
+            
     for features, weight in weights.items():
         if features[1] == '**OFFSET**':
             dic[features[0]] = dic.get(features[0], 0) + weight
         dic[features[0]] = dic.get(features[0], 0) + weight*base_features.get(features[1],0) 
+    
     lab = argmax(dic)
     return lab,dic
     #raise NotImplementedError
