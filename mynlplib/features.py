@@ -39,7 +39,7 @@ def get_top_features_for_label_torch(model,vocab,label_set,label,k=5):
         if label_set[i] == label:
             idx = i
     lis = []
-    idxs = np.argsort(weights[idx].detach().numpy())[-5:]
+    idxs = np.argsort(weights[idx].detach().numpy())[-k:]
     for i in range(len(idxs)-1, -1, -1):
         lis.append(vocab[idxs[i]])
     
